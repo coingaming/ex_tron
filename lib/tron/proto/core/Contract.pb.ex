@@ -1,4 +1,4 @@
-defmodule Tron.AccountCreateContract do
+defmodule Protocol.AccountCreateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -11,10 +11,10 @@ defmodule Tron.AccountCreateContract do
 
   field :owner_address, 1, type: :bytes
   field :account_address, 2, type: :bytes
-  field :type, 3, type: Tron.AccountType, enum: true
+  field :type, 3, type: Protocol.AccountType, enum: true
 end
 
-defmodule Tron.AccountUpdateContract do
+defmodule Protocol.AccountUpdateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -28,7 +28,7 @@ defmodule Tron.AccountUpdateContract do
   field :owner_address, 2, type: :bytes
 end
 
-defmodule Tron.SetAccountIdContract do
+defmodule Protocol.SetAccountIdContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -42,7 +42,7 @@ defmodule Tron.SetAccountIdContract do
   field :owner_address, 2, type: :bytes
 end
 
-defmodule Tron.TransferContract do
+defmodule Protocol.TransferContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -58,7 +58,7 @@ defmodule Tron.TransferContract do
   field :amount, 3, type: :int64
 end
 
-defmodule Tron.TransferAssetContract do
+defmodule Protocol.TransferAssetContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -76,7 +76,7 @@ defmodule Tron.TransferAssetContract do
   field :amount, 4, type: :int64
 end
 
-defmodule Tron.VoteAssetContract do
+defmodule Protocol.VoteAssetContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -94,23 +94,23 @@ defmodule Tron.VoteAssetContract do
   field :count, 5, type: :int32
 end
 
-defmodule Tron.VoteWitnessContract do
+defmodule Protocol.VoteWitnessContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           owner_address: String.t(),
-          votes: [Tron.VoteWitnessContract.Vote.t()],
+          votes: [Protocol.VoteWitnessContract.Vote.t()],
           support: boolean
         }
   defstruct [:owner_address, :votes, :support]
 
   field :owner_address, 1, type: :bytes
-  field :votes, 2, repeated: true, type: Tron.VoteWitnessContract.Vote
+  field :votes, 2, repeated: true, type: Protocol.VoteWitnessContract.Vote
   field :support, 3, type: :bool
 end
 
-defmodule Tron.VoteWitnessContract.Vote do
+defmodule Protocol.VoteWitnessContract.Vote do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -124,7 +124,7 @@ defmodule Tron.VoteWitnessContract.Vote do
   field :vote_count, 2, type: :int64
 end
 
-defmodule Tron.UpdateSettingContract do
+defmodule Protocol.UpdateSettingContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -140,7 +140,7 @@ defmodule Tron.UpdateSettingContract do
   field :consume_user_resource_percent, 3, type: :int64
 end
 
-defmodule Tron.UpdateSettingForEnergyLimitContract do
+defmodule Protocol.UpdateSettingForEnergyLimitContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -156,7 +156,7 @@ defmodule Tron.UpdateSettingForEnergyLimitContract do
   field :energy_limit, 3, type: :bytes
 end
 
-defmodule Tron.WitnessCreateContract do
+defmodule Protocol.WitnessCreateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -170,7 +170,7 @@ defmodule Tron.WitnessCreateContract do
   field :url, 2, type: :bytes
 end
 
-defmodule Tron.WitnessUpdateContract do
+defmodule Protocol.WitnessUpdateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -184,7 +184,7 @@ defmodule Tron.WitnessUpdateContract do
   field :update_url, 12, type: :bytes
 end
 
-defmodule Tron.AssetIssueContract do
+defmodule Protocol.AssetIssueContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -193,7 +193,7 @@ defmodule Tron.AssetIssueContract do
           name: String.t(),
           abbr: String.t(),
           total_supply: integer,
-          frozen_supply: [Tron.AssetIssueContract.FrozenSupply.t()],
+          frozen_supply: [Protocol.AssetIssueContract.FrozenSupply.t()],
           trx_num: integer,
           num: integer,
           start_time: integer,
@@ -231,7 +231,7 @@ defmodule Tron.AssetIssueContract do
   field :name, 2, type: :bytes
   field :abbr, 3, type: :bytes
   field :total_supply, 4, type: :int64
-  field :frozen_supply, 5, repeated: true, type: Tron.AssetIssueContract.FrozenSupply
+  field :frozen_supply, 5, repeated: true, type: Protocol.AssetIssueContract.FrozenSupply
   field :trx_num, 6, type: :int32
   field :num, 8, type: :int32
   field :start_time, 9, type: :int64
@@ -246,7 +246,7 @@ defmodule Tron.AssetIssueContract do
   field :public_latest_free_net_time, 25, type: :int64
 end
 
-defmodule Tron.AssetIssueContract.FrozenSupply do
+defmodule Protocol.AssetIssueContract.FrozenSupply do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -260,7 +260,7 @@ defmodule Tron.AssetIssueContract.FrozenSupply do
   field :frozen_days, 2, type: :int64
 end
 
-defmodule Tron.ParticipateAssetIssueContract do
+defmodule Protocol.ParticipateAssetIssueContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -278,7 +278,7 @@ defmodule Tron.ParticipateAssetIssueContract do
   field :amount, 4, type: :int64
 end
 
-defmodule Tron.FreezeBalanceContract do
+defmodule Protocol.FreezeBalanceContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -293,10 +293,10 @@ defmodule Tron.FreezeBalanceContract do
   field :owner_address, 1, type: :bytes
   field :frozen_balance, 2, type: :int64
   field :frozen_duration, 3, type: :int64
-  field :resource, 10, type: Tron.ResourceCode, enum: true
+  field :resource, 10, type: Protocol.ResourceCode, enum: true
 end
 
-defmodule Tron.UnfreezeBalanceContract do
+defmodule Protocol.UnfreezeBalanceContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -307,10 +307,10 @@ defmodule Tron.UnfreezeBalanceContract do
   defstruct [:owner_address, :resource]
 
   field :owner_address, 1, type: :bytes
-  field :resource, 10, type: Tron.ResourceCode, enum: true
+  field :resource, 10, type: Protocol.ResourceCode, enum: true
 end
 
-defmodule Tron.UnfreezeAssetContract do
+defmodule Protocol.UnfreezeAssetContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -322,7 +322,7 @@ defmodule Tron.UnfreezeAssetContract do
   field :owner_address, 1, type: :bytes
 end
 
-defmodule Tron.WithdrawBalanceContract do
+defmodule Protocol.WithdrawBalanceContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -334,7 +334,7 @@ defmodule Tron.WithdrawBalanceContract do
   field :owner_address, 1, type: :bytes
 end
 
-defmodule Tron.UpdateAssetContract do
+defmodule Protocol.UpdateAssetContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -354,7 +354,7 @@ defmodule Tron.UpdateAssetContract do
   field :new_public_limit, 5, type: :int64
 end
 
-defmodule Tron.ProposalCreateContract do
+defmodule Protocol.ProposalCreateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -368,11 +368,11 @@ defmodule Tron.ProposalCreateContract do
 
   field :parameters, 2,
     repeated: true,
-    type: Tron.ProposalCreateContract.ParametersEntry,
+    type: Protocol.ProposalCreateContract.ParametersEntry,
     map: true
 end
 
-defmodule Tron.ProposalCreateContract.ParametersEntry do
+defmodule Protocol.ProposalCreateContract.ParametersEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -386,7 +386,7 @@ defmodule Tron.ProposalCreateContract.ParametersEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Tron.ProposalApproveContract do
+defmodule Protocol.ProposalApproveContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -402,7 +402,7 @@ defmodule Tron.ProposalApproveContract do
   field :is_add_approval, 3, type: :bool
 end
 
-defmodule Tron.ProposalDeleteContract do
+defmodule Protocol.ProposalDeleteContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -416,21 +416,21 @@ defmodule Tron.ProposalDeleteContract do
   field :proposal_id, 2, type: :int64
 end
 
-defmodule Tron.CreateSmartContract do
+defmodule Protocol.CreateSmartContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           owner_address: String.t(),
-          new_contract: Tron.SmartContract.t()
+          new_contract: Protocol.SmartContract.t()
         }
   defstruct [:owner_address, :new_contract]
 
   field :owner_address, 1, type: :bytes
-  field :new_contract, 2, type: Tron.SmartContract
+  field :new_contract, 2, type: Protocol.SmartContract
 end
 
-defmodule Tron.TriggerSmartContract do
+defmodule Protocol.TriggerSmartContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -448,7 +448,7 @@ defmodule Tron.TriggerSmartContract do
   field :data, 4, type: :bytes
 end
 
-defmodule Tron.BuyStorageContract do
+defmodule Protocol.BuyStorageContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -462,7 +462,7 @@ defmodule Tron.BuyStorageContract do
   field :quant, 2, type: :int64
 end
 
-defmodule Tron.BuyStorageBytesContract do
+defmodule Protocol.BuyStorageBytesContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -476,7 +476,7 @@ defmodule Tron.BuyStorageBytesContract do
   field :bytes, 2, type: :int64
 end
 
-defmodule Tron.SellStorageContract do
+defmodule Protocol.SellStorageContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -490,7 +490,7 @@ defmodule Tron.SellStorageContract do
   field :storage_bytes, 2, type: :int64
 end
 
-defmodule Tron.ExchangeCreateContract do
+defmodule Protocol.ExchangeCreateContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -516,7 +516,7 @@ defmodule Tron.ExchangeCreateContract do
   field :second_token_balance, 5, type: :int64
 end
 
-defmodule Tron.ExchangeInjectContract do
+defmodule Protocol.ExchangeInjectContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -534,7 +534,7 @@ defmodule Tron.ExchangeInjectContract do
   field :quant, 4, type: :int64
 end
 
-defmodule Tron.ExchangeWithdrawContract do
+defmodule Protocol.ExchangeWithdrawContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -552,7 +552,7 @@ defmodule Tron.ExchangeWithdrawContract do
   field :quant, 4, type: :int64
 end
 
-defmodule Tron.ExchangeTransactionContract do
+defmodule Protocol.ExchangeTransactionContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -572,7 +572,7 @@ defmodule Tron.ExchangeTransactionContract do
   field :expected, 5, type: :int64
 end
 
-defmodule Tron.ResourceCode do
+defmodule Protocol.ResourceCode do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 

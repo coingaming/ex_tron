@@ -64,21 +64,21 @@ defmodule Tron do
 
   Example:
 
-      iex> transaction = Tron.Transaction.new(raw_data: Tron.Transaction.Raw.new())
+      iex> transaction = Protocol.Transaction.new(raw_data: Protocol.Transaction.Raw.new())
       iex> privkey_base16 = "b9a367686d7fce1a5fdceb9b3b6ff116b5df5c9c8c9899dbaeaa00c1cb7b02a6"
       iex> privkey = Base.decode16!(privkey_base16, case: :lower)
-      iex> %Tron.Transaction{signature: [signature]} = sign_transaction(transaction, privkey)
+      iex> %Protocol.Transaction{signature: [signature]} = sign_transaction(transaction, privkey)
       iex> Base.encode16(signature, case: :lower)
       "a7cb7d32e8e50097a65d0ca3c5a2f54491d018346dc5a6cbdbcb7086e4ffcc6a4" <>
       "19dcbe0630b9d09cf8ec76d3b74fbc3d2adc78f307c260ec3f9b651dc37c8db01"
 
   """
-  @spec sign_transaction(Tron.Transaction.t(), private_key) :: Tron.Transaction.t()
+  @spec sign_transaction(Protocol.Transaction.t(), private_key) :: Protocol.Transaction.t()
   def sign_transaction(
-        %Tron.Transaction{raw_data: raw_data, signature: []} = transaction,
+        %Protocol.Transaction{raw_data: raw_data, signature: []} = transaction,
         <<privkey::32-bytes>>
       ) do
-    hash = :crypto.hash(:sha256, Tron.Transaction.Raw.encode(raw_data))
+    hash = :crypto.hash(:sha256, Protocol.Transaction.Raw.encode(raw_data))
     %{transaction | signature: [signature(hash, privkey)]}
   end
 
@@ -88,26 +88,27 @@ defmodule Tron do
 
   Example:
 
-      iex> transaction = Tron.Transaction.new(raw_data: Tron.Transaction.Raw.new())
-      iex> block_header = Tron.BlockHeader.Raw.new(
+      iex> transaction = Protocol.Transaction.new(raw_data: Protocol.Transaction.Raw.new())
+      iex> block_header = Protocol.BlockHeader.Raw.new(
       ...>   number: 123,
-      ...>   parentHash: (1..30 |> Enum.into([]) |> to_string()),
       ...>   timestamp: 12334556787
       ...> )
-      iex> %Tron.Transaction{raw_data: raw_data} = set_reference(transaction, block_header)
+      iex> %Protocol.Transaction{raw_data: raw_data} = set_reference(transaction, block_header)
       iex> {raw_data.ref_block_bytes, raw_data.ref_block_hash, raw_data.expiration}
       {<<0, 123>>, <<9, 10, 11, 12, 13, 14, 15, 16>>, 12370556787}
 
   """
-  @spec set_reference(Tron.Transaction.t(), Tron.BlockHeader.Raw.t()) :: Tron.Transaction.t()
+  @spec set_reference(Protocol.Transaction.t(), Protocol.BlockHeader.Raw.t()) ::
+          Protocol.Transaction.t()
   def set_reference(
-        %Tron.Transaction{raw_data: raw_data} = transaction,
-        %Tron.BlockHeader.Raw{
+        %Protocol.Transaction{raw_data: raw_data} = transaction,
+        %Protocol.BlockHeader.Raw{
           number: ref_block_num,
-          parentHash: hash,
           timestamp: timestamp
-        }
+        } = block_header_raw
       ) do
+    hash = :crypto.hash(:sha256, Protocol.BlockHeader.Raw.encode(block_header_raw))
+
     <<_::6-bytes, ref_block_bytes::2-bytes>> = <<ref_block_num::64>>
     <<_::8-bytes, ref_block_hash::8-bytes, _::bytes>> = hash
 

@@ -1,4 +1,4 @@
-defmodule Tron.InventoryItems do
+defmodule Protocol.InventoryItems do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
