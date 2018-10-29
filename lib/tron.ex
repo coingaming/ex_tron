@@ -95,7 +95,7 @@ defmodule Tron do
       ...> )
       iex> %Protocol.Transaction{raw_data: raw_data} = set_reference(transaction, block_header)
       iex> {raw_data.ref_block_bytes, raw_data.ref_block_hash, raw_data.expiration}
-      {<<0, 123>>, <<9, 10, 11, 12, 13, 14, 15, 16>>, 12370556787}
+      {<<0, 123>>, <<30, 70, 44, 221, 244, 196, 156, 248>>, 12370556787}
 
   """
   @spec set_reference(Protocol.Transaction.t(), Protocol.BlockHeader.Raw.t()) ::
