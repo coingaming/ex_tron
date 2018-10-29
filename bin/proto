@@ -1,0 +1,55 @@
+#! /usr/bin/env bash
+
+# adpted from
+# https://github.com/cjab/weddell/blob/master/bin/update-proto
+# and https://github.com/tony612/google-protos/blob/master/generate_google_protos.sh
+
+set -e
+
+if [ "$MIX_HOME" = "" ] ; then
+  export MIX_HOME=$HOME/.mix
+fi
+
+PLUGIN_PATH=$MIX_HOME/escripts/protoc-gen-elixir
+
+if [ ! -f $PLUGIN_PATH ] ; then
+  mix escript.install hex protobuf
+fi
+
+DIR="$( cd "$( dirname "$0" )/.." && pwd )"
+TMP_DIR=$DIR/tmp
+OUT=$DIR/lib/tron/proto
+PROTOBUF_PATH=$TMP_DIR/protobuf
+GOOGLEAPIS_PATH=$TMP_DIR/googleapis
+
+cd $DIR
+mkdir -p $TMP_DIR
+
+if [ ! -d "$GOOGLEAPIS_PATH" ]; then
+  git clone git@github.com:googleapis/googleapis.git $GOOGLEAPIS_PATH
+fi
+cd $GOOGLEAPIS_PATH && git pull && cd $DIR
+
+mkdir -p $OUT
+
+protoc -I $GOOGLEAPIS_PATH \
+  --plugin=protoc-gen-elixir=$PLUGIN_PATH \
+  --elixir_out=plugins=grpc:$OUT \
+  $GOOGLEAPIS_PATH/google/api/annotations.proto
+
+PROTOS=("
+    tron-protocol/core/Discover.proto
+    tron-protocol/core/Tron.proto
+    tron-protocol/core/Contract.proto
+    tron-protocol/core/TronInventoryItems.proto
+")
+
+API="tron-protocol/api/api.proto"
+
+rm -rf ./lib/tron/proto/*
+
+for file in $PROTOS ; do
+  protoc -I ./tron-protocol/ --elixir_out=plugins=grpc:./lib/tron/proto $file
+done
+
+protoc -I ./tron-protocol/ -I $GOOGLEAPIS_PATH --elixir_out=plugins=grpc:./lib/tron/proto $API
