@@ -1,4 +1,4 @@
-defmodule Protocol.AccountId do
+defmodule Tron.AccountId do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -12,7 +12,7 @@ defmodule Protocol.AccountId do
   field :address, 2, type: :bytes
 end
 
-defmodule Protocol.Vote do
+defmodule Tron.Vote do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -26,7 +26,7 @@ defmodule Protocol.Vote do
   field :vote_count, 2, type: :int64
 end
 
-defmodule Protocol.Proposal do
+defmodule Tron.Proposal do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -51,14 +51,14 @@ defmodule Protocol.Proposal do
 
   field :proposal_id, 1, type: :int64
   field :proposer_address, 2, type: :bytes
-  field :parameters, 3, repeated: true, type: Protocol.Proposal.ParametersEntry, map: true
+  field :parameters, 3, repeated: true, type: Tron.Proposal.ParametersEntry, map: true
   field :expiration_time, 4, type: :int64
   field :create_time, 5, type: :int64
   field :approvals, 6, repeated: true, type: :bytes
-  field :state, 7, type: Protocol.Proposal.State, enum: true
+  field :state, 7, type: Tron.Proposal.State, enum: true
 end
 
-defmodule Protocol.Proposal.ParametersEntry do
+defmodule Tron.Proposal.ParametersEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -72,7 +72,7 @@ defmodule Protocol.Proposal.ParametersEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.Proposal.State do
+defmodule Tron.Proposal.State do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -82,7 +82,7 @@ defmodule Protocol.Proposal.State do
   field :CANCELED, 3
 end
 
-defmodule Protocol.Exchange do
+defmodule Tron.Exchange do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -114,19 +114,19 @@ defmodule Protocol.Exchange do
   field :second_token_balance, 9, type: :int64
 end
 
-defmodule Protocol.ChainParameters do
+defmodule Tron.ChainParameters do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          chainParameter: [Protocol.ChainParameters.ChainParameter.t()]
+          chainParameter: [Tron.ChainParameters.ChainParameter.t()]
         }
   defstruct [:chainParameter]
 
-  field :chainParameter, 1, repeated: true, type: Protocol.ChainParameters.ChainParameter
+  field :chainParameter, 1, repeated: true, type: Tron.ChainParameters.ChainParameter
 end
 
-defmodule Protocol.ChainParameters.ChainParameter do
+defmodule Tron.ChainParameters.ChainParameter do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -140,7 +140,7 @@ defmodule Protocol.ChainParameters.ChainParameter do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.Account do
+defmodule Tron.Account do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -149,9 +149,9 @@ defmodule Protocol.Account do
           type: integer,
           address: String.t(),
           balance: integer,
-          votes: [Protocol.Vote.t()],
+          votes: [Tron.Vote.t()],
           asset: %{String.t() => integer},
-          frozen: [Protocol.Account.Frozen.t()],
+          frozen: [Tron.Account.Frozen.t()],
           net_usage: integer,
           create_time: integer,
           latest_opration_time: integer,
@@ -160,7 +160,7 @@ defmodule Protocol.Account do
           code: String.t(),
           is_witness: boolean,
           is_committee: boolean,
-          frozen_supply: [Protocol.Account.Frozen.t()],
+          frozen_supply: [Tron.Account.Frozen.t()],
           asset_issued_name: String.t(),
           latest_asset_operation_time: %{String.t() => integer},
           free_net_usage: integer,
@@ -168,7 +168,7 @@ defmodule Protocol.Account do
           latest_consume_time: integer,
           latest_consume_free_time: integer,
           account_id: String.t(),
-          account_resource: Protocol.Account.AccountResource.t(),
+          account_resource: Tron.Account.AccountResource.t() | nil,
           codeHash: String.t()
         }
   defstruct [
@@ -200,12 +200,12 @@ defmodule Protocol.Account do
   ]
 
   field :account_name, 1, type: :bytes
-  field :type, 2, type: Protocol.AccountType, enum: true
+  field :type, 2, type: Tron.AccountType, enum: true
   field :address, 3, type: :bytes
   field :balance, 4, type: :int64
-  field :votes, 5, repeated: true, type: Protocol.Vote
-  field :asset, 6, repeated: true, type: Protocol.Account.AssetEntry, map: true
-  field :frozen, 7, repeated: true, type: Protocol.Account.Frozen
+  field :votes, 5, repeated: true, type: Tron.Vote
+  field :asset, 6, repeated: true, type: Tron.Account.AssetEntry, map: true
+  field :frozen, 7, repeated: true, type: Tron.Account.Frozen
   field :net_usage, 8, type: :int64
   field :create_time, 9, type: :int64
   field :latest_opration_time, 10, type: :int64
@@ -214,29 +214,29 @@ defmodule Protocol.Account do
   field :code, 13, type: :bytes
   field :is_witness, 14, type: :bool
   field :is_committee, 15, type: :bool
-  field :frozen_supply, 16, repeated: true, type: Protocol.Account.Frozen
+  field :frozen_supply, 16, repeated: true, type: Tron.Account.Frozen
   field :asset_issued_name, 17, type: :bytes
 
   field :latest_asset_operation_time, 18,
     repeated: true,
-    type: Protocol.Account.LatestAssetOperationTimeEntry,
+    type: Tron.Account.LatestAssetOperationTimeEntry,
     map: true
 
   field :free_net_usage, 19, type: :int64
 
   field :free_asset_net_usage, 20,
     repeated: true,
-    type: Protocol.Account.FreeAssetNetUsageEntry,
+    type: Tron.Account.FreeAssetNetUsageEntry,
     map: true
 
   field :latest_consume_time, 21, type: :int64
   field :latest_consume_free_time, 22, type: :int64
   field :account_id, 23, type: :bytes
-  field :account_resource, 26, type: Protocol.Account.AccountResource
+  field :account_resource, 26, type: Tron.Account.AccountResource
   field :codeHash, 30, type: :bytes
 end
 
-defmodule Protocol.Account.Frozen do
+defmodule Tron.Account.Frozen do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -250,7 +250,7 @@ defmodule Protocol.Account.Frozen do
   field :expire_time, 2, type: :int64
 end
 
-defmodule Protocol.Account.AssetEntry do
+defmodule Tron.Account.AssetEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -264,7 +264,7 @@ defmodule Protocol.Account.AssetEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.Account.LatestAssetOperationTimeEntry do
+defmodule Tron.Account.LatestAssetOperationTimeEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -278,7 +278,7 @@ defmodule Protocol.Account.LatestAssetOperationTimeEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.Account.FreeAssetNetUsageEntry do
+defmodule Tron.Account.FreeAssetNetUsageEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -292,13 +292,13 @@ defmodule Protocol.Account.FreeAssetNetUsageEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.Account.AccountResource do
+defmodule Tron.Account.AccountResource do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           energy_usage: integer,
-          frozen_balance_for_energy: Protocol.Account.Frozen.t(),
+          frozen_balance_for_energy: Tron.Account.Frozen.t() | nil,
           latest_consume_time_for_energy: integer,
           storage_limit: integer,
           storage_usage: integer,
@@ -314,40 +314,40 @@ defmodule Protocol.Account.AccountResource do
   ]
 
   field :energy_usage, 1, type: :int64
-  field :frozen_balance_for_energy, 2, type: Protocol.Account.Frozen
+  field :frozen_balance_for_energy, 2, type: Tron.Account.Frozen
   field :latest_consume_time_for_energy, 3, type: :int64
   field :storage_limit, 6, type: :int64
   field :storage_usage, 7, type: :int64
   field :latest_exchange_storage_time, 8, type: :int64
 end
 
-defmodule Protocol.Authority do
+defmodule Tron.Authority do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          account: Protocol.AccountId.t(),
+          account: Tron.AccountId.t() | nil,
           permission_name: String.t()
         }
   defstruct [:account, :permission_name]
 
-  field :account, 1, type: Protocol.AccountId
+  field :account, 1, type: Tron.AccountId
   field :permission_name, 2, type: :bytes
 end
 
-defmodule Protocol.Permission do
+defmodule Tron.Permission do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          account: Protocol.AccountId.t()
+          account: Tron.AccountId.t() | nil
         }
   defstruct [:account]
 
-  field :account, 1, type: Protocol.AccountId
+  field :account, 1, type: Tron.AccountId
 end
 
-defmodule Protocol.Witness do
+defmodule Tron.Witness do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -385,23 +385,23 @@ defmodule Protocol.Witness do
   field :isJobs, 9, type: :bool
 end
 
-defmodule Protocol.Votes do
+defmodule Tron.Votes do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           address: String.t(),
-          old_votes: [Protocol.Vote.t()],
-          new_votes: [Protocol.Vote.t()]
+          old_votes: [Tron.Vote.t()],
+          new_votes: [Tron.Vote.t()]
         }
   defstruct [:address, :old_votes, :new_votes]
 
   field :address, 1, type: :bytes
-  field :old_votes, 2, repeated: true, type: Protocol.Vote
-  field :new_votes, 3, repeated: true, type: Protocol.Vote
+  field :old_votes, 2, repeated: true, type: Tron.Vote
+  field :new_votes, 3, repeated: true, type: Tron.Vote
 end
 
-defmodule Protocol.TXOutput do
+defmodule Tron.TXOutput do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -415,21 +415,21 @@ defmodule Protocol.TXOutput do
   field :pubKeyHash, 2, type: :bytes
 end
 
-defmodule Protocol.TXInput do
+defmodule Tron.TXInput do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          raw_data: Protocol.TXInput.Raw.t(),
+          raw_data: Tron.TXInput.Raw.t() | nil,
           signature: String.t()
         }
   defstruct [:raw_data, :signature]
 
-  field :raw_data, 1, type: Protocol.TXInput.Raw
+  field :raw_data, 1, type: Tron.TXInput.Raw
   field :signature, 4, type: :bytes
 end
 
-defmodule Protocol.TXInput.Raw do
+defmodule Tron.TXInput.Raw do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -445,19 +445,19 @@ defmodule Protocol.TXInput.Raw do
   field :pubKey, 3, type: :bytes
 end
 
-defmodule Protocol.TXOutputs do
+defmodule Tron.TXOutputs do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          outputs: [Protocol.TXOutput.t()]
+          outputs: [Tron.TXOutput.t()]
         }
   defstruct [:outputs]
 
-  field :outputs, 1, repeated: true, type: Protocol.TXOutput
+  field :outputs, 1, repeated: true, type: Tron.TXOutput
 end
 
-defmodule Protocol.ResourceReceipt do
+defmodule Tron.ResourceReceipt do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -486,44 +486,44 @@ defmodule Protocol.ResourceReceipt do
   field :energy_usage_total, 4, type: :int64
   field :net_usage, 5, type: :int64
   field :net_fee, 6, type: :int64
-  field :result, 7, type: Protocol.Transaction.Result.ContractResult, enum: true
+  field :result, 7, type: Tron.Transaction.Result.ContractResult, enum: true
 end
 
-defmodule Protocol.Transaction do
+defmodule Tron.Transaction do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          raw_data: Protocol.Transaction.Raw.t(),
+          raw_data: Tron.Transaction.Raw.t() | nil,
           signature: [String.t()],
-          ret: [Protocol.Transaction.Result.t()]
+          ret: [Tron.Transaction.Result.t()]
         }
   defstruct [:raw_data, :signature, :ret]
 
-  field :raw_data, 1, type: Protocol.Transaction.Raw
+  field :raw_data, 1, type: Tron.Transaction.Raw
   field :signature, 2, repeated: true, type: :bytes
-  field :ret, 5, repeated: true, type: Protocol.Transaction.Result
+  field :ret, 5, repeated: true, type: Tron.Transaction.Result
 end
 
-defmodule Protocol.Transaction.Contract do
+defmodule Tron.Transaction.Contract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           type: integer,
-          parameter: Google.Protobuf.Any.t(),
+          parameter: Google.Protobuf.Any.t() | nil,
           provider: String.t(),
           ContractName: String.t()
         }
   defstruct [:type, :parameter, :provider, :ContractName]
 
-  field :type, 1, type: Protocol.Transaction.Contract.ContractType, enum: true
+  field :type, 1, type: Tron.Transaction.Contract.ContractType, enum: true
   field :parameter, 2, type: Google.Protobuf.Any
   field :provider, 3, type: :bytes
   field :ContractName, 4, type: :bytes
 end
 
-defmodule Protocol.Transaction.Contract.ContractType do
+defmodule Tron.Transaction.Contract.ContractType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -557,7 +557,7 @@ defmodule Protocol.Transaction.Contract.ContractType do
   field :ExchangeTransactionContract, 44
 end
 
-defmodule Protocol.Transaction.Result do
+defmodule Tron.Transaction.Result do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -571,13 +571,13 @@ defmodule Protocol.Transaction.Result do
   defstruct [:fee, :ret, :contractRet, :withdraw_amount, :unfreeze_amount]
 
   field :fee, 1, type: :int64
-  field :ret, 2, type: Protocol.Transaction.Result.Code, enum: true
-  field :contractRet, 3, type: Protocol.Transaction.Result.ContractResult, enum: true
+  field :ret, 2, type: Tron.Transaction.Result.Code, enum: true
+  field :contractRet, 3, type: Tron.Transaction.Result.ContractResult, enum: true
   field :withdraw_amount, 15, type: :int64
   field :unfreeze_amount, 16, type: :int64
 end
 
-defmodule Protocol.Transaction.Result.Code do
+defmodule Tron.Transaction.Result.Code do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -585,7 +585,7 @@ defmodule Protocol.Transaction.Result.Code do
   field :FAILED, 1
 end
 
-defmodule Protocol.Transaction.Result.ContractResult do
+defmodule Tron.Transaction.Result.ContractResult do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -605,7 +605,7 @@ defmodule Protocol.Transaction.Result.ContractResult do
   field :UNKNOWN, 13
 end
 
-defmodule Protocol.Transaction.Raw do
+defmodule Tron.Transaction.Raw do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -614,9 +614,9 @@ defmodule Protocol.Transaction.Raw do
           ref_block_num: integer,
           ref_block_hash: String.t(),
           expiration: integer,
-          auths: [Protocol.Authority.t()],
+          auths: [Tron.Authority.t()],
           data: String.t(),
-          contract: [Protocol.Transaction.Contract.t()],
+          contract: [Tron.Transaction.Contract.t()],
           scripts: String.t(),
           timestamp: integer,
           fee_limit: integer
@@ -638,15 +638,15 @@ defmodule Protocol.Transaction.Raw do
   field :ref_block_num, 3, type: :int64
   field :ref_block_hash, 4, type: :bytes
   field :expiration, 8, type: :int64
-  field :auths, 9, repeated: true, type: Protocol.Authority
+  field :auths, 9, repeated: true, type: Tron.Authority
   field :data, 10, type: :bytes
-  field :contract, 11, repeated: true, type: Protocol.Transaction.Contract
+  field :contract, 11, repeated: true, type: Tron.Transaction.Contract
   field :scripts, 12, type: :bytes
   field :timestamp, 14, type: :int64
   field :fee_limit, 18, type: :int64
 end
 
-defmodule Protocol.TransactionInfo do
+defmodule Tron.TransactionInfo do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -657,13 +657,13 @@ defmodule Protocol.TransactionInfo do
           blockTimeStamp: integer,
           contractResult: [String.t()],
           contract_address: String.t(),
-          receipt: Protocol.ResourceReceipt.t(),
-          log: [Protocol.TransactionInfo.Log.t()],
+          receipt: Tron.ResourceReceipt.t() | nil,
+          log: [Tron.TransactionInfo.Log.t()],
           result: integer,
           resMessage: String.t(),
           withdraw_amount: integer,
           unfreeze_amount: integer,
-          internal_transactions: [Protocol.InternalTransaction.t()]
+          internal_transactions: [Tron.InternalTransaction.t()]
         }
   defstruct [
     :id,
@@ -687,16 +687,16 @@ defmodule Protocol.TransactionInfo do
   field :blockTimeStamp, 4, type: :int64
   field :contractResult, 5, repeated: true, type: :bytes
   field :contract_address, 6, type: :bytes
-  field :receipt, 7, type: Protocol.ResourceReceipt
-  field :log, 8, repeated: true, type: Protocol.TransactionInfo.Log
-  field :result, 9, type: Protocol.TransactionInfo.Code, enum: true
+  field :receipt, 7, type: Tron.ResourceReceipt
+  field :log, 8, repeated: true, type: Tron.TransactionInfo.Log
+  field :result, 9, type: Tron.TransactionInfo.Code, enum: true
   field :resMessage, 10, type: :bytes
   field :withdraw_amount, 15, type: :int64
   field :unfreeze_amount, 16, type: :int64
-  field :internal_transactions, 17, repeated: true, type: Protocol.InternalTransaction
+  field :internal_transactions, 17, repeated: true, type: Tron.InternalTransaction
 end
 
-defmodule Protocol.TransactionInfo.Log do
+defmodule Tron.TransactionInfo.Log do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -712,7 +712,7 @@ defmodule Protocol.TransactionInfo.Log do
   field :data, 3, type: :bytes
 end
 
-defmodule Protocol.TransactionInfo.Code do
+defmodule Tron.TransactionInfo.Code do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -720,47 +720,47 @@ defmodule Protocol.TransactionInfo.Code do
   field :FAILED, 1
 end
 
-defmodule Protocol.Transactions do
+defmodule Tron.Transactions do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transactions: [Protocol.Transaction.t()]
+          transactions: [Tron.Transaction.t()]
         }
   defstruct [:transactions]
 
-  field :transactions, 1, repeated: true, type: Protocol.Transaction
+  field :transactions, 1, repeated: true, type: Tron.Transaction
 end
 
-defmodule Protocol.TransactionSign do
+defmodule Tron.TransactionSign do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transaction: Protocol.Transaction.t(),
+          transaction: Tron.Transaction.t() | nil,
           privateKey: String.t()
         }
   defstruct [:transaction, :privateKey]
 
-  field :transaction, 1, type: Protocol.Transaction
+  field :transaction, 1, type: Tron.Transaction
   field :privateKey, 2, type: :bytes
 end
 
-defmodule Protocol.BlockHeader do
+defmodule Tron.BlockHeader do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          raw_data: Protocol.BlockHeader.Raw.t(),
+          raw_data: Tron.BlockHeader.Raw.t() | nil,
           witness_signature: String.t()
         }
   defstruct [:raw_data, :witness_signature]
 
-  field :raw_data, 1, type: Protocol.BlockHeader.Raw
+  field :raw_data, 1, type: Tron.BlockHeader.Raw
   field :witness_signature, 2, type: :bytes
 end
 
-defmodule Protocol.BlockHeader.Raw do
+defmodule Tron.BlockHeader.Raw do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -792,35 +792,35 @@ defmodule Protocol.BlockHeader.Raw do
   field :version, 10, type: :int32
 end
 
-defmodule Protocol.Block do
+defmodule Tron.Block do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transactions: [Protocol.Transaction.t()],
-          block_header: Protocol.BlockHeader.t()
+          transactions: [Tron.Transaction.t()],
+          block_header: Tron.BlockHeader.t() | nil
         }
   defstruct [:transactions, :block_header]
 
-  field :transactions, 1, repeated: true, type: Protocol.Transaction
-  field :block_header, 2, type: Protocol.BlockHeader
+  field :transactions, 1, repeated: true, type: Tron.Transaction
+  field :block_header, 2, type: Tron.BlockHeader
 end
 
-defmodule Protocol.ChainInventory do
+defmodule Tron.ChainInventory do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          ids: [Protocol.ChainInventory.BlockId.t()],
+          ids: [Tron.ChainInventory.BlockId.t()],
           remain_num: integer
         }
   defstruct [:ids, :remain_num]
 
-  field :ids, 1, repeated: true, type: Protocol.ChainInventory.BlockId
+  field :ids, 1, repeated: true, type: Tron.ChainInventory.BlockId
   field :remain_num, 2, type: :int64
 end
 
-defmodule Protocol.ChainInventory.BlockId do
+defmodule Tron.ChainInventory.BlockId do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -834,21 +834,21 @@ defmodule Protocol.ChainInventory.BlockId do
   field :number, 2, type: :int64
 end
 
-defmodule Protocol.BlockInventory do
+defmodule Tron.BlockInventory do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          ids: [Protocol.BlockInventory.BlockId.t()],
+          ids: [Tron.BlockInventory.BlockId.t()],
           type: integer
         }
   defstruct [:ids, :type]
 
-  field :ids, 1, repeated: true, type: Protocol.BlockInventory.BlockId
-  field :type, 2, type: Protocol.BlockInventory.Type, enum: true
+  field :ids, 1, repeated: true, type: Tron.BlockInventory.BlockId
+  field :type, 2, type: Tron.BlockInventory.Type, enum: true
 end
 
-defmodule Protocol.BlockInventory.BlockId do
+defmodule Tron.BlockInventory.BlockId do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -862,7 +862,7 @@ defmodule Protocol.BlockInventory.BlockId do
   field :number, 2, type: :int64
 end
 
-defmodule Protocol.BlockInventory.Type do
+defmodule Tron.BlockInventory.Type do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -871,7 +871,7 @@ defmodule Protocol.BlockInventory.Type do
   field :FETCH, 2
 end
 
-defmodule Protocol.Inventory do
+defmodule Tron.Inventory do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -881,11 +881,11 @@ defmodule Protocol.Inventory do
         }
   defstruct [:type, :ids]
 
-  field :type, 1, type: Protocol.Inventory.InventoryType, enum: true
+  field :type, 1, type: Tron.Inventory.InventoryType, enum: true
   field :ids, 2, repeated: true, type: :bytes
 end
 
-defmodule Protocol.Inventory.InventoryType do
+defmodule Tron.Inventory.InventoryType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -893,25 +893,25 @@ defmodule Protocol.Inventory.InventoryType do
   field :BLOCK, 1
 end
 
-defmodule Protocol.Items do
+defmodule Tron.Items do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           type: integer,
-          blocks: [Protocol.Block.t()],
-          block_headers: [Protocol.BlockHeader.t()],
-          transactions: [Protocol.Transaction.t()]
+          blocks: [Tron.Block.t()],
+          block_headers: [Tron.BlockHeader.t()],
+          transactions: [Tron.Transaction.t()]
         }
   defstruct [:type, :blocks, :block_headers, :transactions]
 
-  field :type, 1, type: Protocol.Items.ItemType, enum: true
-  field :blocks, 2, repeated: true, type: Protocol.Block
-  field :block_headers, 3, repeated: true, type: Protocol.BlockHeader
-  field :transactions, 4, repeated: true, type: Protocol.Transaction
+  field :type, 1, type: Tron.Items.ItemType, enum: true
+  field :blocks, 2, repeated: true, type: Tron.Block
+  field :block_headers, 3, repeated: true, type: Tron.BlockHeader
+  field :transactions, 4, repeated: true, type: Tron.Transaction
 end
 
-defmodule Protocol.Items.ItemType do
+defmodule Tron.Items.ItemType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -921,7 +921,7 @@ defmodule Protocol.Items.ItemType do
   field :BLOCKHEADER, 3
 end
 
-defmodule Protocol.DynamicProperties do
+defmodule Tron.DynamicProperties do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -933,7 +933,7 @@ defmodule Protocol.DynamicProperties do
   field :last_solidity_block_num, 1, type: :int64
 end
 
-defmodule Protocol.DisconnectMessage do
+defmodule Tron.DisconnectMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -942,32 +942,32 @@ defmodule Protocol.DisconnectMessage do
         }
   defstruct [:reason]
 
-  field :reason, 1, type: Protocol.ReasonCode, enum: true
+  field :reason, 1, type: Tron.ReasonCode, enum: true
 end
 
-defmodule Protocol.HelloMessage do
+defmodule Tron.HelloMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          from: Protocol.Endpoint.t(),
+          from: Tron.Endpoint.t() | nil,
           version: integer,
           timestamp: integer,
-          genesisBlockId: Protocol.HelloMessage.BlockId.t(),
-          solidBlockId: Protocol.HelloMessage.BlockId.t(),
-          headBlockId: Protocol.HelloMessage.BlockId.t()
+          genesisBlockId: Tron.HelloMessage.BlockId.t() | nil,
+          solidBlockId: Tron.HelloMessage.BlockId.t() | nil,
+          headBlockId: Tron.HelloMessage.BlockId.t() | nil
         }
   defstruct [:from, :version, :timestamp, :genesisBlockId, :solidBlockId, :headBlockId]
 
-  field :from, 1, type: Protocol.Endpoint
+  field :from, 1, type: Tron.Endpoint
   field :version, 2, type: :int32
   field :timestamp, 3, type: :int64
-  field :genesisBlockId, 4, type: Protocol.HelloMessage.BlockId
-  field :solidBlockId, 5, type: Protocol.HelloMessage.BlockId
-  field :headBlockId, 6, type: Protocol.HelloMessage.BlockId
+  field :genesisBlockId, 4, type: Tron.HelloMessage.BlockId
+  field :solidBlockId, 5, type: Tron.HelloMessage.BlockId
+  field :headBlockId, 6, type: Tron.HelloMessage.BlockId
 end
 
-defmodule Protocol.HelloMessage.BlockId do
+defmodule Tron.HelloMessage.BlockId do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -981,14 +981,14 @@ defmodule Protocol.HelloMessage.BlockId do
   field :number, 2, type: :int64
 end
 
-defmodule Protocol.SmartContract do
+defmodule Tron.SmartContract do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
           origin_address: String.t(),
           contract_address: String.t(),
-          abi: Protocol.SmartContract.ABI.t(),
+          abi: Tron.SmartContract.ABI.t() | nil,
           bytecode: String.t(),
           call_value: integer,
           consume_user_resource_percent: integer,
@@ -1008,7 +1008,7 @@ defmodule Protocol.SmartContract do
 
   field :origin_address, 1, type: :bytes
   field :contract_address, 2, type: :bytes
-  field :abi, 3, type: Protocol.SmartContract.ABI
+  field :abi, 3, type: Tron.SmartContract.ABI
   field :bytecode, 4, type: :bytes
   field :call_value, 5, type: :int64
   field :consume_user_resource_percent, 6, type: :int64
@@ -1016,19 +1016,19 @@ defmodule Protocol.SmartContract do
   field :energy_limit, 8, type: :int64
 end
 
-defmodule Protocol.SmartContract.ABI do
+defmodule Tron.SmartContract.ABI do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          entrys: [Protocol.SmartContract.ABI.Entry.t()]
+          entrys: [Tron.SmartContract.ABI.Entry.t()]
         }
   defstruct [:entrys]
 
-  field :entrys, 1, repeated: true, type: Protocol.SmartContract.ABI.Entry
+  field :entrys, 1, repeated: true, type: Tron.SmartContract.ABI.Entry
 end
 
-defmodule Protocol.SmartContract.ABI.Entry do
+defmodule Tron.SmartContract.ABI.Entry do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -1036,8 +1036,8 @@ defmodule Protocol.SmartContract.ABI.Entry do
           anonymous: boolean,
           constant: boolean,
           name: String.t(),
-          inputs: [Protocol.SmartContract.ABI.Entry.Param.t()],
-          outputs: [Protocol.SmartContract.ABI.Entry.Param.t()],
+          inputs: [Tron.SmartContract.ABI.Entry.Param.t()],
+          outputs: [Tron.SmartContract.ABI.Entry.Param.t()],
           type: integer,
           payable: boolean,
           stateMutability: integer
@@ -1047,17 +1047,14 @@ defmodule Protocol.SmartContract.ABI.Entry do
   field :anonymous, 1, type: :bool
   field :constant, 2, type: :bool
   field :name, 3, type: :string
-  field :inputs, 4, repeated: true, type: Protocol.SmartContract.ABI.Entry.Param
-  field :outputs, 5, repeated: true, type: Protocol.SmartContract.ABI.Entry.Param
-  field :type, 6, type: Protocol.SmartContract.ABI.Entry.EntryType, enum: true
+  field :inputs, 4, repeated: true, type: Tron.SmartContract.ABI.Entry.Param
+  field :outputs, 5, repeated: true, type: Tron.SmartContract.ABI.Entry.Param
+  field :type, 6, type: Tron.SmartContract.ABI.Entry.EntryType, enum: true
   field :payable, 7, type: :bool
-
-  field :stateMutability, 8,
-    type: Protocol.SmartContract.ABI.Entry.StateMutabilityType,
-    enum: true
+  field :stateMutability, 8, type: Tron.SmartContract.ABI.Entry.StateMutabilityType, enum: true
 end
 
-defmodule Protocol.SmartContract.ABI.Entry.Param do
+defmodule Tron.SmartContract.ABI.Entry.Param do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -1073,7 +1070,7 @@ defmodule Protocol.SmartContract.ABI.Entry.Param do
   field :type, 3, type: :string
 end
 
-defmodule Protocol.SmartContract.ABI.Entry.EntryType do
+defmodule Tron.SmartContract.ABI.Entry.EntryType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -1084,7 +1081,7 @@ defmodule Protocol.SmartContract.ABI.Entry.EntryType do
   field :Fallback, 4
 end
 
-defmodule Protocol.SmartContract.ABI.Entry.StateMutabilityType do
+defmodule Tron.SmartContract.ABI.Entry.StateMutabilityType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -1095,7 +1092,7 @@ defmodule Protocol.SmartContract.ABI.Entry.StateMutabilityType do
   field :Payable, 4
 end
 
-defmodule Protocol.InternalTransaction do
+defmodule Tron.InternalTransaction do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -1103,7 +1100,7 @@ defmodule Protocol.InternalTransaction do
           hash: String.t(),
           caller_address: String.t(),
           transferTo_address: String.t(),
-          callValueInfo: [Protocol.InternalTransaction.CallValueInfo.t()],
+          callValueInfo: [Tron.InternalTransaction.CallValueInfo.t()],
           note: String.t(),
           rejected: boolean
         }
@@ -1112,12 +1109,12 @@ defmodule Protocol.InternalTransaction do
   field :hash, 1, type: :bytes
   field :caller_address, 2, type: :bytes
   field :transferTo_address, 3, type: :bytes
-  field :callValueInfo, 4, repeated: true, type: Protocol.InternalTransaction.CallValueInfo
+  field :callValueInfo, 4, repeated: true, type: Tron.InternalTransaction.CallValueInfo
   field :note, 5, type: :bytes
   field :rejected, 6, type: :bool
 end
 
-defmodule Protocol.InternalTransaction.CallValueInfo do
+defmodule Tron.InternalTransaction.CallValueInfo do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -1131,7 +1128,7 @@ defmodule Protocol.InternalTransaction.CallValueInfo do
   field :tokenName, 2, type: :bytes
 end
 
-defmodule Protocol.AccountType do
+defmodule Tron.AccountType do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -1140,7 +1137,7 @@ defmodule Protocol.AccountType do
   field :Contract, 2
 end
 
-defmodule Protocol.ReasonCode do
+defmodule Tron.ReasonCode do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 

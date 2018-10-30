@@ -1,7 +1,7 @@
 defmodule Tron.MixProject do
   use Mix.Project
 
-  @version "0.1.0-rc"
+  @version "0.1.1-rc"
 
   def project do
     [
@@ -46,7 +46,7 @@ defmodule Tron.MixProject do
 
   defp package do
     [
-      maintainers: ["doijaps"],
+      maintainers: ["syfgkjasdkn"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/syfgkjasdkn/tron-protocol"}
     ]

@@ -10,18 +10,18 @@ privkey = <<...>>
 to_address = <<...>>
 
 # build a transfer contract
-transfer_contract = Protocol.TransferContract.new(
+transfer_contract = Tron.TransferContract.new(
   owner_address: Tron.address(privkey), # your address
   to_address: to_address,
   amount: 100_000 # 0.1 TRX
 )
 
 # embed the transfer contract in a transaction contract
-transaction_contract = Protocol.Transaction.Contract.new(
-  type: Protocol.Transaction.Contract.ContractType.value(:TransferContract),
+transaction_contract = Tron.Transaction.Contract.new(
+  type: Tron.Transaction.Contract.ContractType.value(:TransferContract),
   parameter:
     Google.Protobuf.Any.new(
-      value: Protocol.TransferContract.encode(transfer_contract),
+      value: Tron.TransferContract.encode(transfer_contract),
       type_url: "type.googleapis.com/protocol.TransferContract"
     )
 )
@@ -29,8 +29,8 @@ transaction_contract = Protocol.Transaction.Contract.new(
 timestamp = DateTime.to_unix(DateTime.utc_now(), :millisecond)
 
 # build a transaction
-transaction = Protocol.Transaction.new(
-  raw_data: Protocol.Transaction.Raw.new(contract: [transaction_contract], timestamp: timestamp),
+transaction = Tron.Transaction.new(
+  raw_data: Tron.Transaction.Raw.new(contract: [transaction_contract], timestamp: timestamp),
   signature: []
 )
 
@@ -39,9 +39,9 @@ transaction = Protocol.Transaction.new(
 
 # get latest block for reference
 {:ok,
-   %Protocol.BlockExtention{
-     block_header: %Protocol.BlockHeader{raw_data: %Protocol.BlockHeader.Raw{} = block_header_raw}
-   }} = Tron.Client.get_now_block2(channel, Protocol.EmptyMessage.new())
+   %Tron.BlockExtention{
+     block_header: %Tron.BlockHeader{raw_data: %Tron.BlockHeader.Raw{} = block_header_raw}
+   }} = Tron.Client.get_now_block2(channel, Tron.EmptyMessage.new())
 
 # set transaction's block reference and sign it
 transaction =
@@ -50,6 +50,6 @@ transaction =
   |> Tron.sign_transaction(privkey)
 
 # broadcast the transaction
-{:ok, %Protocol.Return{code: 0, message: "", result: true}} =
+{:ok, %Tron.Return{code: 0, message: "", result: true}} =
   Tron.Client.broadcast_transaction(channel, transaction)
 ```

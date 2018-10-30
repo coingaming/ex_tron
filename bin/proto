@@ -49,7 +49,7 @@ API="tron-protocol/api/api.proto"
 rm -rf ./lib/tron/proto/*
 
 for file in $PROTOS ; do
-  protoc -I ./tron-protocol/ --elixir_out=plugins=grpc:./lib/tron/proto $file
+  protoc -I ./tron-protocol/ -I deps/protobuf/src --elixir_out=plugins=grpc:./lib/tron/proto $file
 done
 
-protoc -I ./tron-protocol/ -I $GOOGLEAPIS_PATH --elixir_out=plugins=grpc:./lib/tron/proto $API
+protoc -I ./tron-protocol/ -I deps/protobuf/src -I $GOOGLEAPIS_PATH --elixir_out=plugins=grpc:./lib/tron/proto $API

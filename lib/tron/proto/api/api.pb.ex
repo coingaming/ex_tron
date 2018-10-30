@@ -1,4 +1,4 @@
-defmodule Protocol.Return do
+defmodule Tron.Return do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -10,11 +10,11 @@ defmodule Protocol.Return do
   defstruct [:result, :code, :message]
 
   field :result, 1, type: :bool
-  field :code, 2, type: Protocol.Return.ResponseCode, enum: true
+  field :code, 2, type: Tron.Return.ResponseCode, enum: true
   field :message, 3, type: :bytes
 end
 
-defmodule Protocol.Return.ResponseCode do
+defmodule Tron.Return.ResponseCode do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
 
@@ -31,7 +31,7 @@ defmodule Protocol.Return.ResponseCode do
   field :OTHER_ERROR, 20
 end
 
-defmodule Protocol.BlockReference do
+defmodule Tron.BlockReference do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -45,103 +45,103 @@ defmodule Protocol.BlockReference do
   field :block_hash, 2, type: :bytes
 end
 
-defmodule Protocol.WitnessList do
+defmodule Tron.WitnessList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          witnesses: [Protocol.Witness.t()]
+          witnesses: [Tron.Witness.t()]
         }
   defstruct [:witnesses]
 
-  field :witnesses, 1, repeated: true, type: Protocol.Witness
+  field :witnesses, 1, repeated: true, type: Tron.Witness
 end
 
-defmodule Protocol.ProposalList do
+defmodule Tron.ProposalList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          proposals: [Protocol.Proposal.t()]
+          proposals: [Tron.Proposal.t()]
         }
   defstruct [:proposals]
 
-  field :proposals, 1, repeated: true, type: Protocol.Proposal
+  field :proposals, 1, repeated: true, type: Tron.Proposal
 end
 
-defmodule Protocol.ExchangeList do
+defmodule Tron.ExchangeList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          exchanges: [Protocol.Exchange.t()]
+          exchanges: [Tron.Exchange.t()]
         }
   defstruct [:exchanges]
 
-  field :exchanges, 1, repeated: true, type: Protocol.Exchange
+  field :exchanges, 1, repeated: true, type: Tron.Exchange
 end
 
-defmodule Protocol.AssetIssueList do
+defmodule Tron.AssetIssueList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          assetIssue: [Protocol.AssetIssueContract.t()]
+          assetIssue: [Tron.AssetIssueContract.t()]
         }
   defstruct [:assetIssue]
 
-  field :assetIssue, 1, repeated: true, type: Protocol.AssetIssueContract
+  field :assetIssue, 1, repeated: true, type: Tron.AssetIssueContract
 end
 
-defmodule Protocol.BlockList do
+defmodule Tron.BlockList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          block: [Protocol.Block.t()]
+          block: [Tron.Block.t()]
         }
   defstruct [:block]
 
-  field :block, 1, repeated: true, type: Protocol.Block
+  field :block, 1, repeated: true, type: Tron.Block
 end
 
-defmodule Protocol.TransactionList do
+defmodule Tron.TransactionList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transaction: [Protocol.Transaction.t()]
+          transaction: [Tron.Transaction.t()]
         }
   defstruct [:transaction]
 
-  field :transaction, 1, repeated: true, type: Protocol.Transaction
+  field :transaction, 1, repeated: true, type: Tron.Transaction
 end
 
-defmodule Protocol.NodeList do
+defmodule Tron.NodeList do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          nodes: [Protocol.Node.t()]
+          nodes: [Tron.Node.t()]
         }
   defstruct [:nodes]
 
-  field :nodes, 1, repeated: true, type: Protocol.Node
+  field :nodes, 1, repeated: true, type: Tron.Node
 end
 
-defmodule Protocol.Node do
+defmodule Tron.Node do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          address: Protocol.Address.t()
+          address: Tron.Address.t() | nil
         }
   defstruct [:address]
 
-  field :address, 1, type: Protocol.Address
+  field :address, 1, type: Tron.Address
 end
 
-defmodule Protocol.Address do
+defmodule Tron.Address do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -155,14 +155,14 @@ defmodule Protocol.Address do
   field :port, 2, type: :int32
 end
 
-defmodule Protocol.EmptyMessage do
+defmodule Tron.EmptyMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   defstruct []
 end
 
-defmodule Protocol.NumberMessage do
+defmodule Tron.NumberMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -174,7 +174,7 @@ defmodule Protocol.NumberMessage do
   field :num, 1, type: :int64
 end
 
-defmodule Protocol.BytesMessage do
+defmodule Tron.BytesMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -186,7 +186,7 @@ defmodule Protocol.BytesMessage do
   field :value, 1, type: :bytes
 end
 
-defmodule Protocol.TimeMessage do
+defmodule Tron.TimeMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -200,7 +200,7 @@ defmodule Protocol.TimeMessage do
   field :endInMilliseconds, 2, type: :int64
 end
 
-defmodule Protocol.BlockLimit do
+defmodule Tron.BlockLimit do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -214,7 +214,7 @@ defmodule Protocol.BlockLimit do
   field :endNum, 2, type: :int64
 end
 
-defmodule Protocol.TransactionLimit do
+defmodule Tron.TransactionLimit do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -228,39 +228,39 @@ defmodule Protocol.TransactionLimit do
   field :limitNum, 2, type: :int64
 end
 
-defmodule Protocol.AccountPaginated do
+defmodule Tron.AccountPaginated do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          account: Protocol.Account.t(),
+          account: Tron.Account.t() | nil,
           offset: integer,
           limit: integer
         }
   defstruct [:account, :offset, :limit]
 
-  field :account, 1, type: Protocol.Account
+  field :account, 1, type: Tron.Account
   field :offset, 2, type: :int64
   field :limit, 3, type: :int64
 end
 
-defmodule Protocol.TimePaginatedMessage do
+defmodule Tron.TimePaginatedMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          timeMessage: Protocol.TimeMessage.t(),
+          timeMessage: Tron.TimeMessage.t() | nil,
           offset: integer,
           limit: integer
         }
   defstruct [:timeMessage, :offset, :limit]
 
-  field :timeMessage, 1, type: Protocol.TimeMessage
+  field :timeMessage, 1, type: Tron.TimeMessage
   field :offset, 2, type: :int64
   field :limit, 3, type: :int64
 end
 
-defmodule Protocol.AccountNetMessage do
+defmodule Tron.AccountNetMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -292,19 +292,19 @@ defmodule Protocol.AccountNetMessage do
 
   field :assetNetUsed, 5,
     repeated: true,
-    type: Protocol.AccountNetMessage.AssetNetUsedEntry,
+    type: Tron.AccountNetMessage.AssetNetUsedEntry,
     map: true
 
   field :assetNetLimit, 6,
     repeated: true,
-    type: Protocol.AccountNetMessage.AssetNetLimitEntry,
+    type: Tron.AccountNetMessage.AssetNetLimitEntry,
     map: true
 
   field :TotalNetLimit, 7, type: :int64
   field :TotalNetWeight, 8, type: :int64
 end
 
-defmodule Protocol.AccountNetMessage.AssetNetUsedEntry do
+defmodule Tron.AccountNetMessage.AssetNetUsedEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -318,7 +318,7 @@ defmodule Protocol.AccountNetMessage.AssetNetUsedEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.AccountNetMessage.AssetNetLimitEntry do
+defmodule Tron.AccountNetMessage.AssetNetLimitEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -332,7 +332,7 @@ defmodule Protocol.AccountNetMessage.AssetNetLimitEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.AccountResourceMessage do
+defmodule Tron.AccountResourceMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -376,12 +376,12 @@ defmodule Protocol.AccountResourceMessage do
 
   field :assetNetUsed, 5,
     repeated: true,
-    type: Protocol.AccountResourceMessage.AssetNetUsedEntry,
+    type: Tron.AccountResourceMessage.AssetNetUsedEntry,
     map: true
 
   field :assetNetLimit, 6,
     repeated: true,
-    type: Protocol.AccountResourceMessage.AssetNetLimitEntry,
+    type: Tron.AccountResourceMessage.AssetNetLimitEntry,
     map: true
 
   field :TotalNetLimit, 7, type: :int64
@@ -394,7 +394,7 @@ defmodule Protocol.AccountResourceMessage do
   field :storageLimit, 22, type: :int64
 end
 
-defmodule Protocol.AccountResourceMessage.AssetNetUsedEntry do
+defmodule Tron.AccountResourceMessage.AssetNetUsedEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -408,7 +408,7 @@ defmodule Protocol.AccountResourceMessage.AssetNetUsedEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.AccountResourceMessage.AssetNetLimitEntry do
+defmodule Tron.AccountResourceMessage.AssetNetLimitEntry do
   @moduledoc false
   use Protobuf, map: true, syntax: :proto3
 
@@ -422,7 +422,7 @@ defmodule Protocol.AccountResourceMessage.AssetNetLimitEntry do
   field :value, 2, type: :int64
 end
 
-defmodule Protocol.PaginatedMessage do
+defmodule Tron.PaginatedMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -436,7 +436,7 @@ defmodule Protocol.PaginatedMessage do
   field :limit, 2, type: :int64
 end
 
-defmodule Protocol.EasyTransferMessage do
+defmodule Tron.EasyTransferMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -452,7 +452,7 @@ defmodule Protocol.EasyTransferMessage do
   field :amount, 3, type: :int64
 end
 
-defmodule Protocol.EasyTransferByPrivateMessage do
+defmodule Tron.EasyTransferByPrivateMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -468,23 +468,23 @@ defmodule Protocol.EasyTransferByPrivateMessage do
   field :amount, 3, type: :int64
 end
 
-defmodule Protocol.EasyTransferResponse do
+defmodule Tron.EasyTransferResponse do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transaction: Protocol.Transaction.t(),
-          result: Protocol.Return.t(),
+          transaction: Tron.Transaction.t() | nil,
+          result: Tron.Return.t() | nil,
           txid: String.t()
         }
   defstruct [:transaction, :result, :txid]
 
-  field :transaction, 1, type: Protocol.Transaction
-  field :result, 2, type: Protocol.Return
+  field :transaction, 1, type: Tron.Transaction
+  field :result, 2, type: Tron.Return
   field :txid, 3, type: :bytes
 end
 
-defmodule Protocol.AddressPrKeyPairMessage do
+defmodule Tron.AddressPrKeyPairMessage do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
@@ -498,225 +498,221 @@ defmodule Protocol.AddressPrKeyPairMessage do
   field :privateKey, 2, type: :string
 end
 
-defmodule Protocol.TransactionExtention do
+defmodule Tron.TransactionExtention do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transaction: Protocol.Transaction.t(),
+          transaction: Tron.Transaction.t() | nil,
           txid: String.t(),
           constant_result: [String.t()],
-          result: Protocol.Return.t()
+          result: Tron.Return.t() | nil
         }
   defstruct [:transaction, :txid, :constant_result, :result]
 
-  field :transaction, 1, type: Protocol.Transaction
+  field :transaction, 1, type: Tron.Transaction
   field :txid, 2, type: :bytes
   field :constant_result, 3, repeated: true, type: :bytes
-  field :result, 4, type: Protocol.Return
+  field :result, 4, type: Tron.Return
 end
 
-defmodule Protocol.BlockExtention do
+defmodule Tron.BlockExtention do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transactions: [Protocol.TransactionExtention.t()],
-          block_header: Protocol.BlockHeader.t(),
+          transactions: [Tron.TransactionExtention.t()],
+          block_header: Tron.BlockHeader.t() | nil,
           blockid: String.t()
         }
   defstruct [:transactions, :block_header, :blockid]
 
-  field :transactions, 1, repeated: true, type: Protocol.TransactionExtention
-  field :block_header, 2, type: Protocol.BlockHeader
+  field :transactions, 1, repeated: true, type: Tron.TransactionExtention
+  field :block_header, 2, type: Tron.BlockHeader
   field :blockid, 3, type: :bytes
 end
 
-defmodule Protocol.BlockListExtention do
+defmodule Tron.BlockListExtention do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          block: [Protocol.BlockExtention.t()]
+          block: [Tron.BlockExtention.t()]
         }
   defstruct [:block]
 
-  field :block, 1, repeated: true, type: Protocol.BlockExtention
+  field :block, 1, repeated: true, type: Tron.BlockExtention
 end
 
-defmodule Protocol.TransactionListExtention do
+defmodule Tron.TransactionListExtention do
   @moduledoc false
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          transaction: [Protocol.TransactionExtention.t()]
+          transaction: [Tron.TransactionExtention.t()]
         }
   defstruct [:transaction]
 
-  field :transaction, 1, repeated: true, type: Protocol.TransactionExtention
+  field :transaction, 1, repeated: true, type: Tron.TransactionExtention
 end
 
-defmodule Protocol.Wallet.Service do
+defmodule Tron.Wallet.Service do
   @moduledoc false
   use GRPC.Service, name: "protocol.Wallet"
 
-  rpc :GetAccount, Protocol.Account, Protocol.Account
-  rpc :GetAccountById, Protocol.Account, Protocol.Account
-  rpc :CreateTransaction, Protocol.TransferContract, Protocol.Transaction
-  rpc :CreateTransaction2, Protocol.TransferContract, Protocol.TransactionExtention
-  rpc :BroadcastTransaction, Protocol.Transaction, Protocol.Return
-  rpc :UpdateAccount, Protocol.AccountUpdateContract, Protocol.Transaction
-  rpc :SetAccountId, Protocol.SetAccountIdContract, Protocol.Transaction
-  rpc :UpdateAccount2, Protocol.AccountUpdateContract, Protocol.TransactionExtention
-  rpc :VoteWitnessAccount, Protocol.VoteWitnessContract, Protocol.Transaction
-  rpc :UpdateSetting, Protocol.UpdateSettingContract, Protocol.TransactionExtention
+  rpc :GetAccount, Tron.Account, Tron.Account
+  rpc :GetAccountById, Tron.Account, Tron.Account
+  rpc :CreateTransaction, Tron.TransferContract, Tron.Transaction
+  rpc :CreateTransaction2, Tron.TransferContract, Tron.TransactionExtention
+  rpc :BroadcastTransaction, Tron.Transaction, Tron.Return
+  rpc :UpdateAccount, Tron.AccountUpdateContract, Tron.Transaction
+  rpc :SetAccountId, Tron.SetAccountIdContract, Tron.Transaction
+  rpc :UpdateAccount2, Tron.AccountUpdateContract, Tron.TransactionExtention
+  rpc :VoteWitnessAccount, Tron.VoteWitnessContract, Tron.Transaction
+  rpc :UpdateSetting, Tron.UpdateSettingContract, Tron.TransactionExtention
 
   rpc :UpdateSettingForEnergyLimit,
-      Protocol.UpdateSettingForEnergyLimitContract,
-      Protocol.TransactionExtention
+      Tron.UpdateSettingForEnergyLimitContract,
+      Tron.TransactionExtention
 
-  rpc :VoteWitnessAccount2, Protocol.VoteWitnessContract, Protocol.TransactionExtention
-  rpc :CreateAssetIssue, Protocol.AssetIssueContract, Protocol.Transaction
-  rpc :CreateAssetIssue2, Protocol.AssetIssueContract, Protocol.TransactionExtention
-  rpc :UpdateWitness, Protocol.WitnessUpdateContract, Protocol.Transaction
-  rpc :UpdateWitness2, Protocol.WitnessUpdateContract, Protocol.TransactionExtention
-  rpc :CreateAccount, Protocol.AccountCreateContract, Protocol.Transaction
-  rpc :CreateAccount2, Protocol.AccountCreateContract, Protocol.TransactionExtention
-  rpc :CreateWitness, Protocol.WitnessCreateContract, Protocol.Transaction
-  rpc :CreateWitness2, Protocol.WitnessCreateContract, Protocol.TransactionExtention
-  rpc :TransferAsset, Protocol.TransferAssetContract, Protocol.Transaction
-  rpc :TransferAsset2, Protocol.TransferAssetContract, Protocol.TransactionExtention
-  rpc :ParticipateAssetIssue, Protocol.ParticipateAssetIssueContract, Protocol.Transaction
-
-  rpc :ParticipateAssetIssue2,
-      Protocol.ParticipateAssetIssueContract,
-      Protocol.TransactionExtention
-
-  rpc :FreezeBalance, Protocol.FreezeBalanceContract, Protocol.Transaction
-  rpc :FreezeBalance2, Protocol.FreezeBalanceContract, Protocol.TransactionExtention
-  rpc :UnfreezeBalance, Protocol.UnfreezeBalanceContract, Protocol.Transaction
-  rpc :UnfreezeBalance2, Protocol.UnfreezeBalanceContract, Protocol.TransactionExtention
-  rpc :UnfreezeAsset, Protocol.UnfreezeAssetContract, Protocol.Transaction
-  rpc :UnfreezeAsset2, Protocol.UnfreezeAssetContract, Protocol.TransactionExtention
-  rpc :WithdrawBalance, Protocol.WithdrawBalanceContract, Protocol.Transaction
-  rpc :WithdrawBalance2, Protocol.WithdrawBalanceContract, Protocol.TransactionExtention
-  rpc :UpdateAsset, Protocol.UpdateAssetContract, Protocol.Transaction
-  rpc :UpdateAsset2, Protocol.UpdateAssetContract, Protocol.TransactionExtention
-  rpc :ProposalCreate, Protocol.ProposalCreateContract, Protocol.TransactionExtention
-  rpc :ProposalApprove, Protocol.ProposalApproveContract, Protocol.TransactionExtention
-  rpc :ProposalDelete, Protocol.ProposalDeleteContract, Protocol.TransactionExtention
-  rpc :BuyStorage, Protocol.BuyStorageContract, Protocol.TransactionExtention
-  rpc :BuyStorageBytes, Protocol.BuyStorageBytesContract, Protocol.TransactionExtention
-  rpc :SellStorage, Protocol.SellStorageContract, Protocol.TransactionExtention
-  rpc :ExchangeCreate, Protocol.ExchangeCreateContract, Protocol.TransactionExtention
-  rpc :ExchangeInject, Protocol.ExchangeInjectContract, Protocol.TransactionExtention
-  rpc :ExchangeWithdraw, Protocol.ExchangeWithdrawContract, Protocol.TransactionExtention
-  rpc :ExchangeTransaction, Protocol.ExchangeTransactionContract, Protocol.TransactionExtention
-  rpc :ListNodes, Protocol.EmptyMessage, Protocol.NodeList
-  rpc :GetAssetIssueByAccount, Protocol.Account, Protocol.AssetIssueList
-  rpc :GetAccountNet, Protocol.Account, Protocol.AccountNetMessage
-  rpc :GetAccountResource, Protocol.Account, Protocol.AccountResourceMessage
-  rpc :GetAssetIssueByName, Protocol.BytesMessage, Protocol.AssetIssueContract
-  rpc :GetNowBlock, Protocol.EmptyMessage, Protocol.Block
-  rpc :GetNowBlock2, Protocol.EmptyMessage, Protocol.BlockExtention
-  rpc :GetBlockByNum, Protocol.NumberMessage, Protocol.Block
-  rpc :GetBlockByNum2, Protocol.NumberMessage, Protocol.BlockExtention
-  rpc :GetTransactionCountByBlockNum, Protocol.NumberMessage, Protocol.NumberMessage
-  rpc :GetBlockById, Protocol.BytesMessage, Protocol.Block
-  rpc :GetBlockByLimitNext, Protocol.BlockLimit, Protocol.BlockList
-  rpc :GetBlockByLimitNext2, Protocol.BlockLimit, Protocol.BlockListExtention
-  rpc :GetBlockByLatestNum, Protocol.NumberMessage, Protocol.BlockList
-  rpc :GetBlockByLatestNum2, Protocol.NumberMessage, Protocol.BlockListExtention
-  rpc :GetTransactionById, Protocol.BytesMessage, Protocol.Transaction
-  rpc :DeployContract, Protocol.CreateSmartContract, Protocol.TransactionExtention
-  rpc :GetContract, Protocol.BytesMessage, Protocol.SmartContract
-  rpc :TriggerContract, Protocol.TriggerSmartContract, Protocol.TransactionExtention
-  rpc :ListWitnesses, Protocol.EmptyMessage, Protocol.WitnessList
-  rpc :ListProposals, Protocol.EmptyMessage, Protocol.ProposalList
-  rpc :GetPaginatedProposalList, Protocol.PaginatedMessage, Protocol.ProposalList
-  rpc :GetProposalById, Protocol.BytesMessage, Protocol.Proposal
-  rpc :ListExchanges, Protocol.EmptyMessage, Protocol.ExchangeList
-  rpc :GetPaginatedExchangeList, Protocol.PaginatedMessage, Protocol.ExchangeList
-  rpc :GetExchangeById, Protocol.BytesMessage, Protocol.Exchange
-  rpc :GetChainParameters, Protocol.EmptyMessage, Protocol.ChainParameters
-  rpc :GetAssetIssueList, Protocol.EmptyMessage, Protocol.AssetIssueList
-  rpc :GetPaginatedAssetIssueList, Protocol.PaginatedMessage, Protocol.AssetIssueList
-  rpc :TotalTransaction, Protocol.EmptyMessage, Protocol.NumberMessage
-  rpc :GetNextMaintenanceTime, Protocol.EmptyMessage, Protocol.NumberMessage
-  rpc :GetTransactionSign, Protocol.TransactionSign, Protocol.Transaction
-  rpc :GetTransactionSign2, Protocol.TransactionSign, Protocol.TransactionExtention
-  rpc :CreateAddress, Protocol.BytesMessage, Protocol.BytesMessage
-  rpc :EasyTransfer, Protocol.EasyTransferMessage, Protocol.EasyTransferResponse
-  rpc :EasyTransferByPrivate, Protocol.EasyTransferByPrivateMessage, Protocol.EasyTransferResponse
-  rpc :GenerateAddress, Protocol.EmptyMessage, Protocol.AddressPrKeyPairMessage
-  rpc :GetTransactionInfoById, Protocol.BytesMessage, Protocol.TransactionInfo
+  rpc :VoteWitnessAccount2, Tron.VoteWitnessContract, Tron.TransactionExtention
+  rpc :CreateAssetIssue, Tron.AssetIssueContract, Tron.Transaction
+  rpc :CreateAssetIssue2, Tron.AssetIssueContract, Tron.TransactionExtention
+  rpc :UpdateWitness, Tron.WitnessUpdateContract, Tron.Transaction
+  rpc :UpdateWitness2, Tron.WitnessUpdateContract, Tron.TransactionExtention
+  rpc :CreateAccount, Tron.AccountCreateContract, Tron.Transaction
+  rpc :CreateAccount2, Tron.AccountCreateContract, Tron.TransactionExtention
+  rpc :CreateWitness, Tron.WitnessCreateContract, Tron.Transaction
+  rpc :CreateWitness2, Tron.WitnessCreateContract, Tron.TransactionExtention
+  rpc :TransferAsset, Tron.TransferAssetContract, Tron.Transaction
+  rpc :TransferAsset2, Tron.TransferAssetContract, Tron.TransactionExtention
+  rpc :ParticipateAssetIssue, Tron.ParticipateAssetIssueContract, Tron.Transaction
+  rpc :ParticipateAssetIssue2, Tron.ParticipateAssetIssueContract, Tron.TransactionExtention
+  rpc :FreezeBalance, Tron.FreezeBalanceContract, Tron.Transaction
+  rpc :FreezeBalance2, Tron.FreezeBalanceContract, Tron.TransactionExtention
+  rpc :UnfreezeBalance, Tron.UnfreezeBalanceContract, Tron.Transaction
+  rpc :UnfreezeBalance2, Tron.UnfreezeBalanceContract, Tron.TransactionExtention
+  rpc :UnfreezeAsset, Tron.UnfreezeAssetContract, Tron.Transaction
+  rpc :UnfreezeAsset2, Tron.UnfreezeAssetContract, Tron.TransactionExtention
+  rpc :WithdrawBalance, Tron.WithdrawBalanceContract, Tron.Transaction
+  rpc :WithdrawBalance2, Tron.WithdrawBalanceContract, Tron.TransactionExtention
+  rpc :UpdateAsset, Tron.UpdateAssetContract, Tron.Transaction
+  rpc :UpdateAsset2, Tron.UpdateAssetContract, Tron.TransactionExtention
+  rpc :ProposalCreate, Tron.ProposalCreateContract, Tron.TransactionExtention
+  rpc :ProposalApprove, Tron.ProposalApproveContract, Tron.TransactionExtention
+  rpc :ProposalDelete, Tron.ProposalDeleteContract, Tron.TransactionExtention
+  rpc :BuyStorage, Tron.BuyStorageContract, Tron.TransactionExtention
+  rpc :BuyStorageBytes, Tron.BuyStorageBytesContract, Tron.TransactionExtention
+  rpc :SellStorage, Tron.SellStorageContract, Tron.TransactionExtention
+  rpc :ExchangeCreate, Tron.ExchangeCreateContract, Tron.TransactionExtention
+  rpc :ExchangeInject, Tron.ExchangeInjectContract, Tron.TransactionExtention
+  rpc :ExchangeWithdraw, Tron.ExchangeWithdrawContract, Tron.TransactionExtention
+  rpc :ExchangeTransaction, Tron.ExchangeTransactionContract, Tron.TransactionExtention
+  rpc :ListNodes, Tron.EmptyMessage, Tron.NodeList
+  rpc :GetAssetIssueByAccount, Tron.Account, Tron.AssetIssueList
+  rpc :GetAccountNet, Tron.Account, Tron.AccountNetMessage
+  rpc :GetAccountResource, Tron.Account, Tron.AccountResourceMessage
+  rpc :GetAssetIssueByName, Tron.BytesMessage, Tron.AssetIssueContract
+  rpc :GetNowBlock, Tron.EmptyMessage, Tron.Block
+  rpc :GetNowBlock2, Tron.EmptyMessage, Tron.BlockExtention
+  rpc :GetBlockByNum, Tron.NumberMessage, Tron.Block
+  rpc :GetBlockByNum2, Tron.NumberMessage, Tron.BlockExtention
+  rpc :GetTransactionCountByBlockNum, Tron.NumberMessage, Tron.NumberMessage
+  rpc :GetBlockById, Tron.BytesMessage, Tron.Block
+  rpc :GetBlockByLimitNext, Tron.BlockLimit, Tron.BlockList
+  rpc :GetBlockByLimitNext2, Tron.BlockLimit, Tron.BlockListExtention
+  rpc :GetBlockByLatestNum, Tron.NumberMessage, Tron.BlockList
+  rpc :GetBlockByLatestNum2, Tron.NumberMessage, Tron.BlockListExtention
+  rpc :GetTransactionById, Tron.BytesMessage, Tron.Transaction
+  rpc :DeployContract, Tron.CreateSmartContract, Tron.TransactionExtention
+  rpc :GetContract, Tron.BytesMessage, Tron.SmartContract
+  rpc :TriggerContract, Tron.TriggerSmartContract, Tron.TransactionExtention
+  rpc :ListWitnesses, Tron.EmptyMessage, Tron.WitnessList
+  rpc :ListProposals, Tron.EmptyMessage, Tron.ProposalList
+  rpc :GetPaginatedProposalList, Tron.PaginatedMessage, Tron.ProposalList
+  rpc :GetProposalById, Tron.BytesMessage, Tron.Proposal
+  rpc :ListExchanges, Tron.EmptyMessage, Tron.ExchangeList
+  rpc :GetPaginatedExchangeList, Tron.PaginatedMessage, Tron.ExchangeList
+  rpc :GetExchangeById, Tron.BytesMessage, Tron.Exchange
+  rpc :GetChainParameters, Tron.EmptyMessage, Tron.ChainParameters
+  rpc :GetAssetIssueList, Tron.EmptyMessage, Tron.AssetIssueList
+  rpc :GetPaginatedAssetIssueList, Tron.PaginatedMessage, Tron.AssetIssueList
+  rpc :TotalTransaction, Tron.EmptyMessage, Tron.NumberMessage
+  rpc :GetNextMaintenanceTime, Tron.EmptyMessage, Tron.NumberMessage
+  rpc :GetTransactionSign, Tron.TransactionSign, Tron.Transaction
+  rpc :GetTransactionSign2, Tron.TransactionSign, Tron.TransactionExtention
+  rpc :CreateAddress, Tron.BytesMessage, Tron.BytesMessage
+  rpc :EasyTransfer, Tron.EasyTransferMessage, Tron.EasyTransferResponse
+  rpc :EasyTransferByPrivate, Tron.EasyTransferByPrivateMessage, Tron.EasyTransferResponse
+  rpc :GenerateAddress, Tron.EmptyMessage, Tron.AddressPrKeyPairMessage
+  rpc :GetTransactionInfoById, Tron.BytesMessage, Tron.TransactionInfo
 end
 
-defmodule Protocol.Wallet.Stub do
+defmodule Tron.Wallet.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Protocol.Wallet.Service
+  use GRPC.Stub, service: Tron.Wallet.Service
 end
 
-defmodule Protocol.WalletSolidity.Service do
+defmodule Tron.WalletSolidity.Service do
   @moduledoc false
   use GRPC.Service, name: "protocol.WalletSolidity"
 
-  rpc :GetAccount, Protocol.Account, Protocol.Account
-  rpc :GetAccountById, Protocol.Account, Protocol.Account
-  rpc :ListWitnesses, Protocol.EmptyMessage, Protocol.WitnessList
-  rpc :GetAssetIssueList, Protocol.EmptyMessage, Protocol.AssetIssueList
-  rpc :GetPaginatedAssetIssueList, Protocol.PaginatedMessage, Protocol.AssetIssueList
-  rpc :GetNowBlock, Protocol.EmptyMessage, Protocol.Block
-  rpc :GetNowBlock2, Protocol.EmptyMessage, Protocol.BlockExtention
-  rpc :GetBlockByNum, Protocol.NumberMessage, Protocol.Block
-  rpc :GetBlockByNum2, Protocol.NumberMessage, Protocol.BlockExtention
-  rpc :GetTransactionCountByBlockNum, Protocol.NumberMessage, Protocol.NumberMessage
-  rpc :GetTransactionById, Protocol.BytesMessage, Protocol.Transaction
-  rpc :GetTransactionInfoById, Protocol.BytesMessage, Protocol.TransactionInfo
-  rpc :GenerateAddress, Protocol.EmptyMessage, Protocol.AddressPrKeyPairMessage
+  rpc :GetAccount, Tron.Account, Tron.Account
+  rpc :GetAccountById, Tron.Account, Tron.Account
+  rpc :ListWitnesses, Tron.EmptyMessage, Tron.WitnessList
+  rpc :GetAssetIssueList, Tron.EmptyMessage, Tron.AssetIssueList
+  rpc :GetPaginatedAssetIssueList, Tron.PaginatedMessage, Tron.AssetIssueList
+  rpc :GetNowBlock, Tron.EmptyMessage, Tron.Block
+  rpc :GetNowBlock2, Tron.EmptyMessage, Tron.BlockExtention
+  rpc :GetBlockByNum, Tron.NumberMessage, Tron.Block
+  rpc :GetBlockByNum2, Tron.NumberMessage, Tron.BlockExtention
+  rpc :GetTransactionCountByBlockNum, Tron.NumberMessage, Tron.NumberMessage
+  rpc :GetTransactionById, Tron.BytesMessage, Tron.Transaction
+  rpc :GetTransactionInfoById, Tron.BytesMessage, Tron.TransactionInfo
+  rpc :GenerateAddress, Tron.EmptyMessage, Tron.AddressPrKeyPairMessage
 end
 
-defmodule Protocol.WalletSolidity.Stub do
+defmodule Tron.WalletSolidity.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Protocol.WalletSolidity.Service
+  use GRPC.Stub, service: Tron.WalletSolidity.Service
 end
 
-defmodule Protocol.WalletExtension.Service do
+defmodule Tron.WalletExtension.Service do
   @moduledoc false
   use GRPC.Service, name: "protocol.WalletExtension"
 
-  rpc :GetTransactionsFromThis, Protocol.AccountPaginated, Protocol.TransactionList
-  rpc :GetTransactionsFromThis2, Protocol.AccountPaginated, Protocol.TransactionListExtention
-  rpc :GetTransactionsToThis, Protocol.AccountPaginated, Protocol.TransactionList
-  rpc :GetTransactionsToThis2, Protocol.AccountPaginated, Protocol.TransactionListExtention
+  rpc :GetTransactionsFromThis, Tron.AccountPaginated, Tron.TransactionList
+  rpc :GetTransactionsFromThis2, Tron.AccountPaginated, Tron.TransactionListExtention
+  rpc :GetTransactionsToThis, Tron.AccountPaginated, Tron.TransactionList
+  rpc :GetTransactionsToThis2, Tron.AccountPaginated, Tron.TransactionListExtention
 end
 
-defmodule Protocol.WalletExtension.Stub do
+defmodule Tron.WalletExtension.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Protocol.WalletExtension.Service
+  use GRPC.Stub, service: Tron.WalletExtension.Service
 end
 
-defmodule Protocol.Database.Service do
+defmodule Tron.Database.Service do
   @moduledoc false
   use GRPC.Service, name: "protocol.Database"
 
-  rpc :getBlockReference, Protocol.EmptyMessage, Protocol.BlockReference
-  rpc :GetDynamicProperties, Protocol.EmptyMessage, Protocol.DynamicProperties
-  rpc :GetNowBlock, Protocol.EmptyMessage, Protocol.Block
-  rpc :GetBlockByNum, Protocol.NumberMessage, Protocol.Block
+  rpc :getBlockReference, Tron.EmptyMessage, Tron.BlockReference
+  rpc :GetDynamicProperties, Tron.EmptyMessage, Tron.DynamicProperties
+  rpc :GetNowBlock, Tron.EmptyMessage, Tron.Block
+  rpc :GetBlockByNum, Tron.NumberMessage, Tron.Block
 end
 
-defmodule Protocol.Database.Stub do
+defmodule Tron.Database.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Protocol.Database.Service
+  use GRPC.Stub, service: Tron.Database.Service
 end
 
-defmodule Protocol.Network.Service do
+defmodule Tron.Network.Service do
   @moduledoc false
   use GRPC.Service, name: "protocol.Network"
 end
 
-defmodule Protocol.Network.Stub do
+defmodule Tron.Network.Stub do
   @moduledoc false
-  use GRPC.Stub, service: Protocol.Network.Service
+  use GRPC.Stub, service: Tron.Network.Service
 end
