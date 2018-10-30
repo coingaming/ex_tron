@@ -1,3 +1,6 @@
+[![Hex pm](http://img.shields.io/hexpm/v/tron.svg?style=flat)](https://hex.pm/packages/tron)
+[![Build Status](https://semaphoreci.com/api/v1/syfgkjasdkn/tron-protocol/branches/master/shields_badge.svg)](https://semaphoreci.com/syfgkjasdkn/tron-protocol)
+
 WIP [TRON protocol](https://tron.network) implementation
 
 ### Examples
