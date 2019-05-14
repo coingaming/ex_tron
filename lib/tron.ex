@@ -132,7 +132,7 @@ defmodule Tron do
     sig_r <> sig_s <> <<recovery>>
   end
 
-  def send_tx(privkey, to_address) do
+  def send_tx(privkey, to_address, amount) do
     # build a transfer contract
     transfer_contract =
       Tron.TransferContract.new(
@@ -140,7 +140,7 @@ defmodule Tron do
         owner_address: Tron.address(privkey),
         to_address: to_address,
         # 0.1 TRX
-        amount: 100_000
+        amount: amount * 1_000_000
       )
 
     # embed the transfer contract in a transaction contract
