@@ -27,3 +27,4 @@ tron-*.tar
 
 /keys/
 /protos_build
+/.elixir_ls
