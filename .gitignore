@@ -24,3 +24,6 @@ tron-*.tar
 
 .DS_Store
 /tmp/
+
+/keys/
+/protos_build

@@ -4,10 +4,10 @@ defmodule Tron.InventoryItems do
 
   @type t :: %__MODULE__{
           type: integer,
-          items: [String.t()]
+          items: [binary]
         }
   defstruct [:type, :items]
 
-  field :type, 1, type: :int32
-  field :items, 2, repeated: true, type: :bytes
+  field(:type, 1, type: :int32)
+  field(:items, 2, repeated: true, type: :bytes)
 end

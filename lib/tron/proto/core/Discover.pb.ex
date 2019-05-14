@@ -3,15 +3,15 @@ defmodule Tron.Endpoint do
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          address: String.t(),
+          address: binary,
           port: integer,
-          nodeId: String.t()
+          nodeId: binary
         }
   defstruct [:address, :port, :nodeId]
 
-  field :address, 1, type: :bytes
-  field :port, 2, type: :int32
-  field :nodeId, 3, type: :bytes
+  field(:address, 1, type: :bytes)
+  field(:port, 2, type: :int32)
+  field(:nodeId, 3, type: :bytes)
 end
 
 defmodule Tron.PingMessage do
@@ -26,10 +26,10 @@ defmodule Tron.PingMessage do
         }
   defstruct [:from, :to, :version, :timestamp]
 
-  field :from, 1, type: Tron.Endpoint
-  field :to, 2, type: Tron.Endpoint
-  field :version, 3, type: :int32
-  field :timestamp, 4, type: :int64
+  field(:from, 1, type: Tron.Endpoint)
+  field(:to, 2, type: Tron.Endpoint)
+  field(:version, 3, type: :int32)
+  field(:timestamp, 4, type: :int64)
 end
 
 defmodule Tron.PongMessage do
@@ -43,9 +43,9 @@ defmodule Tron.PongMessage do
         }
   defstruct [:from, :echo, :timestamp]
 
-  field :from, 1, type: Tron.Endpoint
-  field :echo, 2, type: :int32
-  field :timestamp, 3, type: :int64
+  field(:from, 1, type: Tron.Endpoint)
+  field(:echo, 2, type: :int32)
+  field(:timestamp, 3, type: :int64)
 end
 
 defmodule Tron.FindNeighbours do
@@ -54,14 +54,14 @@ defmodule Tron.FindNeighbours do
 
   @type t :: %__MODULE__{
           from: Tron.Endpoint.t() | nil,
-          targetId: String.t(),
+          targetId: binary,
           timestamp: integer
         }
   defstruct [:from, :targetId, :timestamp]
 
-  field :from, 1, type: Tron.Endpoint
-  field :targetId, 2, type: :bytes
-  field :timestamp, 3, type: :int64
+  field(:from, 1, type: Tron.Endpoint)
+  field(:targetId, 2, type: :bytes)
+  field(:timestamp, 3, type: :int64)
 end
 
 defmodule Tron.Neighbours do
@@ -75,9 +75,9 @@ defmodule Tron.Neighbours do
         }
   defstruct [:from, :neighbours, :timestamp]
 
-  field :from, 1, type: Tron.Endpoint
-  field :neighbours, 2, repeated: true, type: Tron.Endpoint
-  field :timestamp, 3, type: :int64
+  field(:from, 1, type: Tron.Endpoint)
+  field(:neighbours, 2, repeated: true, type: Tron.Endpoint)
+  field(:timestamp, 3, type: :int64)
 end
 
 defmodule Tron.BackupMessage do
@@ -90,6 +90,6 @@ defmodule Tron.BackupMessage do
         }
   defstruct [:flag, :priority]
 
-  field :flag, 1, type: :bool
-  field :priority, 2, type: :int32
+  field(:flag, 1, type: :bool)
+  field(:priority, 2, type: :int32)
 end

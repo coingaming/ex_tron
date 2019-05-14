@@ -31,10 +31,11 @@ defmodule Tron.MixProject do
       # {:jason, "~> 1.1"},
       {:protobuf, "~> 0.5.3"},
       {:google_protos, "~> 0.1"},
-      {:grpc, "~> 0.3.0-alpha.2"},
+      {:grpc, git: "https://github.com/elixir-grpc/grpc.git"},
       {:keccakf1600, "~> 2.0", hex: :keccakf1600_orig},
       {:libsecp256k1, "~> 0.1.10"},
-      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
+      {:cortex, "~> 0.5", only: [:dev, :test]}
     ]
   end
 
@@ -46,9 +47,9 @@ defmodule Tron.MixProject do
 
   defp package do
     [
-      maintainers: ["syfgkjasdkn"],
+      maintainers: ["mlamp"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/syfgkjasdkn/tron-protocol"}
+      links: %{"GitHub" => "https://github.com/mlamp/tron-protocol"}
     ]
   end
 
@@ -58,7 +59,7 @@ defmodule Tron.MixProject do
       name: "Tron",
       source_ref: "v#{@version}",
       canonical: "http://hexdocs.pm/tron",
-      source_url: "https://github.com/syfgkjasdkn/tron-protocol",
+      source_url: "https://github.com/mlamp/tron-protocol",
       extras: [
         "README.md"
       ]

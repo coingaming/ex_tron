@@ -13,6 +13,8 @@ defmodule Tron do
       iex> <<key::32-bytes>> = private_key()
       iex> byte_size(key)
       32
+      iex> is_binary(key)
+      true
 
   """
   @spec private_key :: private_key
@@ -29,7 +31,7 @@ defmodule Tron do
       iex> privkey = Base.decode16!(privkey_base16, case: :lower)
       iex> pubkey = public_key(privkey)
       iex> Base.encode16(pubkey, case: :lower)
-      "047adf4255f518ca27b9b41ddfd97d4a3799e02347b3b1b7c525b67371b3db350" <> 
+      "047adf4255f518ca27b9b41ddfd97d4a3799e02347b3b1b7c525b67371b3db350" <>
       "a571b3bddb9732868daeab70f9ac9bd842c8b26e605855899f32f8526c2e6d5ed"
 
   """
@@ -128,5 +130,70 @@ defmodule Tron do
       :libsecp256k1.ecdsa_sign_compact(hash, privkey, :default, <<>>)
 
     sig_r <> sig_s <> <<recovery>>
+  end
+
+  def send_tx(privkey, to_address) do
+    # build a transfer contract
+    transfer_contract =
+      Tron.TransferContract.new(
+        # your address
+        owner_address: Tron.address(privkey),
+        to_address: to_address,
+        # 0.1 TRX
+        amount: 100_000
+      )
+
+    # embed the transfer contract in a transaction contract
+    transaction_contract =
+      Tron.Transaction.Contract.new(
+        type: Tron.Transaction.Contract.ContractType.value(:TransferContract),
+        parameter:
+          Google.Protobuf.Any.new(
+            value: Tron.TransferContract.encode(transfer_contract),
+            type_url: "type.googleapis.com/protocol.TransferContract"
+          )
+      )
+
+    timestamp = DateTime.to_unix(DateTime.utc_now(), :millisecond)
+
+    # build a transaction
+    transaction =
+      Tron.Transaction.new(
+        raw_data:
+          Tron.Transaction.Raw.new(contract: [transaction_contract], timestamp: timestamp),
+        signature: []
+      )
+
+    # connect to a node (https://github.com/tronprotocol/Documentation/blob/master/TRX/Official_Public_Node.md)
+    {:ok, channel} =
+      GRPC.Stub.connect("grpc.shasta.trongrid.io:50051", interceptors: [GRPC.Logger.Client])
+
+    # get latest block for reference
+    {:ok,
+     %Tron.BlockExtention{
+       block_header: %Tron.BlockHeader{raw_data: %Tron.BlockHeader.Raw{} = block_header_raw}
+     }} = get_latest_block()
+    # set transaction's block reference and sign it
+    transaction =
+      transaction
+      |> Tron.set_reference(block_header_raw)
+      |> Tron.sign_transaction(privkey)
+
+    # broadcast the transaction
+    {:ok, %Tron.Return{code: 0, message: "", result: true}} =
+      Tron.Wallet.Stub.broadcast_transaction(channel, transaction)
+  end
+
+  def get_latest_block do
+    {:ok, channel} = GRPC.Stub.connect("grpc.shasta.trongrid.io:50051")
+    request = Tron.EmptyMessage.new()
+    channel |> Tron.Wallet.Stub.get_now_block2(request)
+  end
+
+  def get_block_by_number(block_number) do
+    # 	3895336
+    {:ok, channel} = GRPC.Stub.connect("grpc.shasta.trongrid.io:50051")
+    request = Tron.NumberMessage.new(num: block_number)
+    channel |> Tron.Wallet.Stub.get_block_by_num(request)
   end
 end
